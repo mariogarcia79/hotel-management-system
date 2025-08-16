@@ -1,6 +1,7 @@
 import { Booking } from '../src/models/booking/Booking';
 import { BookingDetail } from '../src/models/booking/BookingDetail';
 import { Reservation } from '../src/models/booking/Reservation';
+import { ReservationStatus } from '../src/models/enum/Enumerations';
 
 describe('Booking classes', () => {
   it('should create a BookingDetail and add/remove rooms', () => {
@@ -28,7 +29,7 @@ describe('Booking classes', () => {
   });
 
   it('should create a Reservation and change status', () => {
-    const reservation = new Reservation('Pending' as any);
+    const reservation = new Reservation(ReservationStatus.Pending, new Date(), new Date(), new Date(), 300, {} as any, []);
     reservation.setStatus('Confirmed' as any);
     expect(reservation.getStatus()).toBe('Confirmed');
     reservation.setStatus('Cancelled' as any);
