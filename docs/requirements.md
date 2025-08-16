@@ -70,9 +70,9 @@ The **Receptionist Actor** should be able to remove a **Guest Actor** from the *
 
 
 # Non-functional Requirements
-All unique identifiers for **User Actor** and payments must follow the UUID standard.
-The *SYSTEM* should be design taking into account a single property.
-The *SYSTEM* should log all information regarding important operations such as payments, user creation, modification and removal, and new bookings and reservations.
+All unique identifiers for **User Actor** and payments must follow the UUID standard.\
+The *SYSTEM* should be design taking into account a single property.\
+The *SYSTEM* should log all information regarding important operations such as payments, user creation, modification and removal, and new bookings and reservations.\
 The server should be light, in order to be able to be hosted locally, as well as being higly scallable and versatile.
 
 
