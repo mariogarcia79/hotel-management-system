@@ -1,0 +1,196 @@
+Id,Name,Shape Library,Page ID,Contained By,Group,Line Source,Line Destination,Source Arrow,Destination Arrow,Status,Text Area 1,Text Area 2,Text Area 3,Comments
+1,Document,,,,,,,,,Draft,PropertyManagementSystem,,,
+2,Page,,,,,,,,,,Page 1,,,
+3,Class,UML,2,,,,,,,,"<<abstract>>
+User","​- UUID: string
+- name: string
+- surname: string
+- passwordHash: string
+- governmentID: string
+- dateOfBirth: Date
+- createdAt: Date
+- consentToDataProcessing: boolean","​- verifyAge() <<abstract>>
+- generateUUID() <<abstract>>
++ getFullName()
++ login()",
+4,Class,UML,2,,,,,,,,Guest,"​- nationality: Nationality
+- reservationList: List<Reservation>
+- bookingList: List<Booking>","​- generateUUID()
+- verifyAge()
++ checkIn()
++ checkOut()
++ getRooms(dateIn:Date, dateOut:Date):List<Room>
++ getDates(room:Room):List<Dates>
++ makeBooking(dateIn:Date, dateOut:Date, room:Room)
++ makeBooking(reservation:Reservation)
++ modifyBooking(booking:Booking)
++ makeReservation(dateIn:Date, dateOut:Date, room:Room)
++ modifyReservation(reservation:Reservation)
++ cancelReservation(reservation:Reservation)
++ addPaymentInformation()",
+5,Class,UML,2,,,,,,,,Employee,"​- hireDate: Date
+- roles: List<Role>","​- generateUUID()
+- verifyAge()
++ clockIn()
++ clockOut()",
+6,Class,UML,2,,,,,,,,Booking,"​- bookingDate: Date
+- dateIn: Date
+- dateOut: Date
+- price: double","​+ calculatePrice()
++ applyDiscount()
++ changeDates(dateIn:Date,dateOut:Date)",
+7,Class,UML,2,,,,,,,,Hotel,"​- guests: List<Guest>
+- rooms: List<Room>","​+ getGuests():List<Guest>
++ createGuest()
++ modifyGuest(guest:Guest)
++ deleteGuest(guest:Guest)
++ getRooms():List<Room>
++ createRoom()
++ modifyRoom(room:Room)
++ deleteRoom(room:Room)",
+8,Class,UML,2,,,,,,,,BookingDetail,"​- price: Double
+- rooms: List<Room>",​+ getPrice(),
+9,Class,UML,2,,,,,,,,Room,"​- name: string
+- numberOfBeds: integer
+- bathroom: boolean
+- price: double
+- status: RoomStatus",,
+10,Class,UML,2,,,,,,,,Payment,"​- paymentUUID: string
+- totalPrice: double
+- discountAmount: double
+- discountPercentage: integer
+- status: PaymentStatus
+- paymentMethod: PaymentMethod
+- paymentInformation: PaymentInformation
+- currency: string","​- generateUUID()
++ changeStatus(status:PaymentStatus)
++ getPaymentInformation()
++ executePayment()",
+11,Class,UML,2,,,,,,,,UserContactInformation,"​- email: string
+- phoneNumber: string","​- verifyEmail()
+- verifyPhoneNumber()",
+12,Class,UML,2,,,,,,,,Date,,,
+13,Class,UML,2,,,,,,,,"<<Enumeration>>
+Nationality","​+ Spain
++ France
++ Iceland
++ ...",,
+14,Class,UML,2,,,,,,,,UserBillingAddress,"​- address: string
+- postalCode: string
+- city: string
+- country: string","​+ validate()
++ getNormalized()",
+15,Note,UML,2,,,,,,,,Built-in JS Date class.,,,
+16,Class,UML,2,,,,,,,,Reservation,​- status:ReservationStatus,"​+ calculatePrice()
++ applyDiscount()
++ changeDates(dateIn:Date,dateOut:Date)
++ makeBooking()
++ changeStatus(status:ReservationStatus)",
+17,Class,UML,2,,,,,,,,"<<interface>>
+IRole",​+ getPermissions():List<String>,,
+18,Class,UML,2,,,,,,,,HumanResourcesRole,"​+ addRoleToEmployee(role:Role, employee:Employee)
++ addEmployee()
++ removeEmployee(employee:Employee)
++ getEmployeeInfo(employee:Employee)
++ modifyEmployeeInfo(employee:Employee)
++ getEmployeeInfo()",,
+19,Class,UML,2,,,,,,,,ManagerRole,"​+ createRoom()
++ modifyRoom(room:Room)
++ removeRoom(room:Room)",,
+20,Class,UML,2,,,,,,,,ReceptionistRole,"​+ checkInGuest(guest:Guest)
++ checkOutGuest(guest:Guest)
++ payReservation(reservation:Reservation)
++ getBookings()
++ getBookings(room:Room)
++ getBookings(dateMin:Date, dateMax:Date)
++ getBookingInfo(booking:Booking)
++ getReservations()
++ getReservations(room:Room)
++ getReservations(dateMin:Date, dateMax:Date)
++ getReservationInfo(reservation:Reservation)
++ getGuestInfo(guest:Guest)
++ getRoomInfo(room:Room)
++ createGuest()
++ modifyGuest(guest:Guest)
++ removeGuest(guest:Guest)",,
+21,Class,UML,2,,,,,,,,CardPaymentInformation,"​- cardType: string
+- cardNumber: string
+- cardHolderName: string
+- cardExpirationDate: string
+- securityCode: integer",​- verifyCard(),
+22,Class,UML,2,,,,,,,,"<<interface>>
+IPaymentInformation",,,
+23,Class,UML,2,,,,,,,,CashPaymentInformation,,,
+24,Note,UML,2,,,,,,,,The interface PaymentInformation is just to be able to select different payment methods without using inheritance (there is no information in common between Card and Cash payment information).,,,
+25,Note,UML,2,,,,,,,,"The interface Role is a nice way to separate role responsabilities between classes, but with the possibility of an Employee holding more than one Role.",,,
+26,Note,UML,2,,,,,,,,"Separating UserBillingAddress and UserContactInformation is all about good design principles, following the single responsibility, composition and reusability principles. This way, billing address can be used for companies, or other classes, and contact information can be passed to other systems without all the User data. UserBillingAddress can also be used by CardPaymentInformation if required, as well as HumanResources for sending the payroll.",,,
+27,Note,UML,2,,,,,,,,BookingDetail solves the N:M relation proposed when considering that it should be possible to make a Booking of more than one Room.,,,
+28,Class,UML,2,,,,,,,,Task,"​- title: string
+- description: string
+- taskType: TaskType
+- assignedEmployee: Employee
+- assignedRoom: Room
+- scheduledDate: Date
+- status: TaskStatus",​+ changeStatus(newStatus:TaskStatus),
+29,Class,UML,2,,,,,,,,"<<Enumeration>>
+TaskType","​+ Cleaning
++ Mainteinance
++ Office Work
++ Entertainment",,
+30,Class,UML,2,,,,,,,,"<<Enumeration>>
+TaskStatus","​+ In Progress
++ Done
++ To Do
++ Updated",,
+31,Class,UML,2,,,,,,,,"<<Enumeration>>
+ReservationStatus","​+ Booked
++ Reserved",,
+32,Class,UML,2,,,,,,,,"<<Enumeration>>
+RoomStatus","​+ Prepared
++ Unprepared
++ Booked",,
+33,Class,UML,2,,,,,,,,"<<Enumeration>>
+PaymentStatus","​+ Payed
++ Not Payed
++ Partly Payed",,
+34,Class,UML,2,,,,,,,,"<<Enumeration>>
+PaymentMethod","​+ In Reception (Cash)
++ In Reception (Card)
++ Online (Card)
++ Online (Virtual Card)",,
+35,Class,UML,2,,,,,,,,VirtualCardPaymentInformation,,,
+36,Class,UML,2,,,,,,,,CleaningRole,"​+ getCheckOuts():List<Room>
++ changeRoomStatus(room:Room)",,
+37,Note,UML,2,,,,,,,,"A Reservation is a kind of Booking in which only part of the price is payed beforehand. The rest can be payed both on the reception, or online. This way, in case of cancellation, only the amount payed beforehand is lost.",,,
+38,Line,,2,,,11,3,None,Composition,,1,1,,
+39,Line,,2,,,4,3,None,Generalization,,,,,
+40,Line,,2,,,14,3,None,Composition,,0..1,1,,
+41,Line,,2,,,15,12,None,None,,,,,
+42,Line,,2,,,16,6,None,Generalization,,,,,
+43,Line,,2,,,7,5,None,None,,1,0..*,,
+44,Line,,2,,,9,7,None,Composition,,0..*,1,,
+45,Line,,2,,,5,3,None,Generalization,,,,,
+46,Line,,2,,,8,9,None,None,,1,0..*,,
+47,Line,,2,,,6,8,None,None,,0..*,1,,
+48,Line,,2,,,6,4,None,None,,0..*,1,,
+49,Line,,2,,,19,17,None,Generalization,,,,,
+50,Line,,2,,,20,17,None,Generalization,,,,,
+51,Line,,2,,,17,5,None,Aggregation,,1,0..*,,
+52,Line,,2,,,18,17,None,Generalization,,,,,
+53,Line,,2,,,4,7,None,Aggregation,,0..*,1,,
+54,Line,,2,,,6,10,None,None,,1,0..*,,
+55,Line,,2,,,22,4,None,Composition,,0..*,1,,
+56,Line,,2,,,22,10,None,None,,1,0..*,,
+57,Line,,2,,,21,22,None,Generalization,,,,,
+58,Line,,2,,,23,22,None,Generalization,,,,,
+59,Line,,2,,,24,22,None,None,,,,,
+60,Line,,2,,,25,17,None,None,,,,,
+61,Line,,2,,,26,11,None,None,,,,,
+62,Line,,2,,,26,14,None,None,,,,,
+63,Line,,2,,,27,8,None,None,,,,,
+64,Line,,2,,,14,22,None,Composition,,0..1,0..*,,
+65,Line,,2,,,28,5,None,None,,,,,
+66,Line,,2,,,28,9,None,None,,,,,
+67,Line,,2,,,35,22,None,Generalization,,,,,
+68,Line,,2,,,36,17,None,Generalization,,,,,
+69,Line,,2,,,37,16,None,None,,,,,
